@@ -1,0 +1,94 @@
+{
+  "Partner": 12345678,
+  "Warehouses": [
+    {
+      "Warehouse": "Київ_3PL_OCN",
+      "Goods": [
+        {
+          "SKU": "78230094",
+          "GoodName": "Smart/tel ZTE BLADE L8 1/16GB Black",
+          "SalesAndRemains": [
+            {
+              "Type": "Продажа",
+              "SalesDate": "02/09/21",
+              "IMEI": "868512043510606",
+              "Qty": "1"
+            },
+            {
+              "Type": "Остаток",
+              "SalesDate": "02/09/21",
+              "IMEI": "",
+              "Qty": "2"
+            }
+          ]
+        },
+        {
+          "SKU": "78230095",
+          "GoodName": "Smart/tel ZTE BLADE L8 1/16GB Blue",
+          "SalesAndRemains": [
+            {
+              "Type": "Продажа",
+              "SalesDate": "02/09/21",
+              "IMEI": "868512043046148",
+              "Qty": "1"
+            },
+            {
+              "Type": "Остаток",
+              "SalesDate": "02/09/21",
+              "IMEI": "",
+              "Qty": "5"
+            }
+          ]
+        },
+        {
+          "SKU": "78230237",
+          "GoodName": "Smart/tel Xiaomi Redmi 9A 2/32GB Granite Gray",
+          "SalesAndRemains": [
+            {
+              "Type": "Продажа",
+              "SalesDate": "02/09/21",
+              "IMEI": "868184059537541",
+              "Qty": "1"
+            },
+            {
+              "Type": "Продажа",
+              "SalesDate": "02/09/21",
+              "IMEI": "868184059437825",
+              "Qty": "1"
+            },
+            {
+              "Type": "Остаток",
+              "SalesDate": "02/09/21",
+              "IMEI": "",
+              "Qty": "33"
+            }
+          ]
+        },
+        {
+          "SKU": "78230238",
+          "GoodName": "Smart/tel Xiaomi Redmi 9A 2/32GB Sky Blue",
+          "SalesAndRemains": [
+            {
+              "Type": "Продажа",
+              "SalesDate": "02/09/21",
+              "IMEI": "868351057838581",
+              "Qty": "1"
+            },
+            {
+              "Type": "Продажа",
+              "SalesDate": "02/09/21",
+              "IMEI": "868351057913681",
+              "Qty": "1"
+            },
+            {
+              "Type": "Остаток",
+              "SalesDate": "02/09/21",
+              "IMEI": "",
+              "Qty": "11"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

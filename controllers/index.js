@@ -1,5 +1,5 @@
-const getSales = require("./getSales");
+const getWarehouses = require("./getWarehouses");
 
 module.exports = {
-  getSales,
+  getWarehouses,
 };

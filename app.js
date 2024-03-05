@@ -11,15 +11,15 @@ app.use(express.json());
 
 const { checkApiKey } = require("./middlewares");
 
-const salesRouter = require("./routes/api/sales");
+const warehousesRouter = require("./routes/api/warehouses");
 
-const updateDb = require("./middlewares/updateDb");
+// const updateDb = require("./middlewares/updateDb");
 
-setInterval(() => {
-  updateDb();
-}, 7200000);
+// setInterval(() => {
+//   updateDb();
+// }, 7200000);
 
-app.use("/api/sales", checkApiKey, salesRouter);
+app.use("/api/warehouses", checkApiKey, warehousesRouter);
 
 app.use((req, res) => {
   res.status(404).json({ message: "Not found" });

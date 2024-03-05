@@ -1,7 +1,7 @@
 const { newError } = require("../helpers");
 
 function checkApiKey(req, res, next) {
-  if (req.key !== process.env.API_KEY) {
+  if (req.query.key !== process.env.API_KEY) {
     return next(newError(401, "Not authorized"));
   }
 
