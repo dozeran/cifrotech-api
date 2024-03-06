@@ -1,72 +1,64 @@
 const WarehouseModel = require("../models/schemas/warehouse");
 
-const DEFAULT_DATA_TRANSFER_PERIOD = 10 * 24 * 60 * 60; // Період передачі даних за замовчуванням (10 днів)
-
 async function getWarehouses(req, res) {
-  let { DateFrom, DateTo } = req.query;
+  const { DateFrom, DateTo } = req.query;
+  const DefaultDataTransferPeriodInDays = 10;
 
-  const currentDate = new Date();
-  const yesterdayStart = new Date(currentDate);
-  yesterdayStart.setDate(currentDate.getDate() - 1);
-  yesterdayStart.setHours(0, 0, 0, 0);
+  let filter = {};
 
-  if (!DateTo) {
-    DateTo = yesterdayStart.toISOString().slice(0, 10).replace(/-/g, ""); // Начало вчерашнього дня
-  }
+  // Перевіряємо наявність DateFrom і DateTo
+  if (!DateFrom && !DateTo) {
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    yesterday.setHours(0, 0, 0, 0);
 
-  if (!DateFrom) {
-    DateFrom = DateTo;
-    DateFrom = new Date(
-      yesterdayStart.getTime() - DEFAULT_DATA_TRANSFER_PERIOD * 1000
-    )
-      .toISOString()
-      .slice(0, 10)
-      .replace(/-/g, ""); // Початок періоду передачі даних за замовчуванням
-  }
+    const startOfYesterday = new Date(yesterday);
+    startOfYesterday.setDate(
+      startOfYesterday.getDate() - DefaultDataTransferPeriodInDays
+    );
 
-  if (DateFrom > DateTo) {
-    DateFrom = DateTo;
-    DateFrom = new Date(
-      yesterdayStart.getTime() - DEFAULT_DATA_TRANSFER_PERIOD * 1000
-    )
-      .toISOString()
-      .slice(0, 10)
-      .replace(/-/g, ""); // Мінус період передачі даних за замовчуванням
-  }
+    filter["Goods.SalesAndRemains"] = {
+      $elemMatch: {
+        SalesDate: { $gte: startOfYesterday },
+      },
+    };
+  } else {
+    filter["Goods.SalesAndRemains"] = {};
 
-  const startDate = new Date(
-    DateFrom.substring(0, 4),
-    DateFrom.substring(4, 6) - 1,
-    DateFrom.substring(6, 8)
-  );
-  const endDate = new Date(
-    DateTo.substring(0, 4),
-    DateTo.substring(4, 6) - 1,
-    DateTo.substring(6, 8)
-  );
+    if (DateFrom) {
+      const yearDateFrom = DateFrom.slice(0, 4);
+      const monthDateFrom = DateFrom.slice(4, 6);
+      const dayDateFrom = DateFrom.slice(6, 8);
 
-  if (endDate > currentDate) {
-    DateTo = currentDate.toISOString().slice(0, 10).replace(/-/g, ""); // Начало поточного дня
-    if (DateFrom > DateTo) {
-      DateFrom = DateTo;
-      DateFrom = new Date(
-        yesterdayStart.getTime() - DEFAULT_DATA_TRANSFER_PERIOD * 1000
-      )
-        .toISOString()
-        .slice(0, 10)
-        .replace(/-/g, ""); // Мінус період передачі даних за замовчуванням
+      filter["Goods.SalesAndRemains"].$elemMatch = {
+        SalesDate: {
+          $gte: new Date(yearDateFrom, monthDateFrom - 1, dayDateFrom, 2, 0, 0),
+        },
+      };
+    }
+
+    if (DateTo) {
+      const yearDateTo = DateTo.slice(0, 4);
+      const monthDateTo = DateTo.slice(4, 6);
+      const dayDateTo = DateTo.slice(6, 8);
+
+      if (!filter["Goods.SalesAndRemains"].$elemMatch) {
+        filter["Goods.SalesAndRemains"].$elemMatch = {};
+      }
+
+      const endDate = new Date(yearDateTo, monthDateTo - 1, dayDateTo, 2, 0, 0);
+      if (endDate > new Date()) {
+        endDate.setHours(0, 0, 0, 0);
+      }
+
+      filter["Goods.SalesAndRemains"].$elemMatch.SalesDate = {
+        ...(filter["Goods.SalesAndRemains"].$elemMatch.SalesDate || {}),
+        $lte: endDate,
+      };
     }
   }
 
-  // const filter = {
-  //   "Goods.SalesAndRemains": {
-  //     $elemMatch: {
-  //       SalesDate: { $gte: startDate, $lte: endDate },
-  //     },
-  //   },
-  // };
-
-  const result = await WarehouseModel.find().select("-_id");
+  const result = await WarehouseModel.find(filter).select("-_id");
 
   res.json({
     Partner: 413190,
