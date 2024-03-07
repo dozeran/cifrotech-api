@@ -13,10 +13,13 @@ const GoodSchema = new mongoose.Schema({
   SalesAndRemains: [SalesAndRemainsSchema],
 });
 
-const WarehouseSchema = new mongoose.Schema({
-  Warehouse: String,
-  Goods: [GoodSchema],
-});
+const WarehouseSchema = new mongoose.Schema(
+  {
+    Warehouse: String,
+    Goods: [GoodSchema],
+  },
+  { versionKey: false }
+);
 
 const WarehouseModel = mongoose.model("Warehouse", WarehouseSchema);
 

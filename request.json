@@ -1,0 +1,173 @@
+[
+  {
+    "Warehouse": "КривийРіг-Перемоги (м.Кривий Ріг, просп.Перемоги, 35)",
+    "Goods": [
+      {
+        "SKU": "000211731",
+        "GoodName": "Смартфон ZTE Blade L220 1/32 Blue",
+        "SalesAndRemains": [
+          {
+            "Type": "Продаж",
+            "SalesDate": "2024-03-05T00:00:00.000Z",
+            "IMEI": "867912060063268",
+            "Qty": "1"
+          },
+          {
+            "Type": "Залишок",
+            "SalesDate": "2024-03-05T00:00:00.000Z",
+            "IMEI": "",
+            "Qty": "0"
+          }
+        ]
+      },
+      {
+        "SKU": "000188296",
+        "GoodName": "Смартфон ZTE Blade V40S 6/128 GB Black",
+        "SalesAndRemains": [
+          {
+            "Type": "Продаж",
+            "SalesDate": "2024-03-05T00:00:00.000Z",
+            "IMEI": "861276060579871",
+            "Qty": "1"
+          },
+          {
+            "Type": "Залишок",
+            "SalesDate": "2024-03-05T00:00:00.000Z",
+            "IMEI": "",
+            "Qty": "0"
+          }
+        ]
+      },
+      {
+        "SKU": "000187092",
+        "GoodName": "Смартфон ZTE Blade V40 Design 6/128 GB Blue",
+        "SalesAndRemains": [
+          {
+            "Type": "Залишок",
+            "SalesDate": "2024-03-05T00:00:00.000Z",
+            "IMEI": "",
+            "Qty": "1"
+          }
+        ]
+      },
+      {
+        "SKU": "000190841",
+        "GoodName": "Смартфон ZTE Nubia NEO 5G 8/256GB Black",
+        "SalesAndRemains": [
+          {
+            "Type": "Залишок",
+            "SalesDate": "2024-03-05T00:00:00.000Z",
+            "IMEI": "",
+            "Qty": "1"
+          }
+        ]
+      },
+      {
+        "SKU": "000190842",
+        "GoodName": "Смартфон ZTE Nubia NEO 5G 8/256GB Yellow",
+        "SalesAndRemains": [
+          {
+            "Type": "Залишок",
+            "SalesDate": "2024-03-05T00:00:00.000Z",
+            "IMEI": "",
+            "Qty": "1"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "Warehouse": "ЮжноукраїнськНезалежності (м.Южноукраїнськ, просп.Незалежності, 19б)",
+    "Goods": [
+      {
+        "SKU": "000187626",
+        "GoodName": "Смартфон ZTE Blade V40 Vita 4/128 GB Black",
+        "SalesAndRemains": [
+          {
+            "Type": "Продаж",
+            "SalesDate": "2024-03-05T00:00:00.000Z",
+            "IMEI": "863054061487966",
+            "Qty": "1"
+          },
+          {
+            "Type": "Залишок",
+            "SalesDate": "2024-03-05T00:00:00.000Z",
+            "IMEI": "",
+            "Qty": "0"
+          }
+        ]
+      },
+      {
+        "SKU": "000211731",
+        "GoodName": "Смартфон ZTE Blade L220 1/32 Blue",
+        "SalesAndRemains": [
+          {
+            "Type": "Залишок",
+            "SalesDate": "2024-03-05T00:00:00.000Z",
+            "IMEI": "",
+            "Qty": "1"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "Warehouse": "Самсунг Даринок (м.Київ, вул.Якова Гніздовського, 1а)",
+    "Goods": [
+      {
+        "SKU": "000187626",
+        "GoodName": "Смартфон ZTE Blade V40 Vita 4/128 GB Black",
+        "SalesAndRemains": [
+          {
+            "Type": "Продаж",
+            "SalesDate": "2024-03-05T00:00:00.000Z",
+            "IMEI": "863054061483866",
+            "Qty": "1"
+          },
+          {
+            "Type": "Залишок",
+            "SalesDate": "2024-03-05T00:00:00.000Z",
+            "IMEI": "",
+            "Qty": "0"
+          }
+        ]
+      },
+      {
+        "SKU": "000211731",
+        "GoodName": "Смартфон ZTE Blade V40 Design 6/128 GB Blue",
+        "SalesAndRemains": [
+          {
+            "Type": "Залишок",
+            "SalesDate": "2024-03-05T00:00:00.000Z",
+            "IMEI": "",
+            "Qty": "1"
+          }
+        ]
+      },
+      {
+        "SKU": "000188296",
+        "GoodName": "Смартфон ZTE Blade V40S 6/128 GB Black",
+        "SalesAndRemains": [
+          {
+            "Type": "Залишок",
+            "SalesDate": "2024-03-05T00:00:00.000Z",
+            "IMEI": "",
+            "Qty": "1"
+          }
+        ]
+      },
+      {
+        "SKU": "000211733",
+        "GoodName": "Смартфон ZTE Blade V50 Design8/256GB Black",
+        "SalesAndRemains": [
+          {
+            "Type": "Залишок",
+            "SalesDate": "2024-03-05T00:00:00.000Z",
+            "IMEI": "",
+            "Qty": "1"
+          }
+        ]
+      }
+    ]
+  }
+]
