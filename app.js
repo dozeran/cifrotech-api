@@ -1,23 +1,20 @@
 const express = require("express");
 const logger = require("morgan");
 const cors = require("cors");
+const bodyParser = require("body-parser");
 
 const app = express();
 const formatsLogger = app.get("env") === "development" ? "dev" : "short";
 
 app.use(logger(formatsLogger));
 app.use(cors());
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 app.use(express.json());
 
 const { checkApiKey } = require("./middlewares");
 
 const warehousesRouter = require("./routes/api/warehouses");
-
-// const updateDb = require("./middlewares/updateDb");
-
-// setInterval(() => {
-//   updateDb();
-// }, 7200000);
 
 app.use("/api/warehouses", checkApiKey, warehousesRouter);
 
