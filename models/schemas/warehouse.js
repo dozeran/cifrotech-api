@@ -13,13 +13,20 @@ const GoodSchema = new mongoose.Schema({
   SalesAndRemains: [SalesAndRemainsSchema],
 });
 
+GoodSchema.index({ SKU: 1 });
+
 const WarehouseSchema = new mongoose.Schema(
   {
-    Warehouse: String,
+    Warehouse: {
+      type: String,
+      unique: true,
+    },
     Goods: [GoodSchema],
   },
   { versionKey: false }
 );
+
+WarehouseSchema.index({ Warehouse: 1 });
 
 const WarehouseModel = mongoose.model("Warehouse", WarehouseSchema);
 
