@@ -1,53 +1,37 @@
 const WarehouseModel = require('../models/schemas/warehouse');
 
-//Working but very slowly
-
 async function updateWarehouses(req, res) {
     try {
         const input = req.body;
 
-        const updates = [];
+        const updates = input.map(inputItem => {
+            const inputGoods = inputItem.Goods.map(i => ({ ...i, SKU: Number(i.SKU) }));
 
-        for (const inputItem of input) {
-            updates.push(async () => {
-                const warehouseItems = await WarehouseModel.find({
-                    Warehouse: inputItem.Warehouse,
-                });
+            return WarehouseModel.findOne({ Warehouse: inputItem.Warehouse }).then(existingWarehouse => {
+                if (existingWarehouse) {
+                    const existingGoods = existingWarehouse.Goods;
+                    const updatedGoods = [...existingGoods];
 
-                if (warehouseItems.length === 0) {
-                    await WarehouseModel.create(inputItem);
-                    return;
-                }
-
-                const existGoods = warehouseItems[0].Goods;
-
-                const inputGoods = inputItem.Goods
-                    .map(i => (
-                        {
-                            ...i, SKU: Number(i.SKU),
+                    for (const inputGood of inputGoods) {
+                        const index = existingGoods.findIndex(good => good.SKU === inputGood.SKU);
+                        if (index !== -1) {
+                            updatedGoods[index] = inputGood;
+                        } else {
+                            updatedGoods.push(inputGood);
                         }
-                    ));
-                const inputGoodsSkus = inputGoods.map(i => i.SKU);
+                    }
 
-                const goodsToUpsert = existGoods.filter(i => !inputGoodsSkus.includes(i.SKU));
-
-                for (const good of inputGoods) {
-                    goodsToUpsert.push(good);
+                    return WarehouseModel.updateOne(
+                        { Warehouse: inputItem.Warehouse },
+                        { $set: { Goods: updatedGoods } }
+                    ).exec();
+                } else {
+                    return WarehouseModel.create({ ...inputItem, Goods: inputGoods });
                 }
-
-                await WarehouseModel.updateOne(
-                    { Warehouse: inputItem.Warehouse },
-                    {
-                        $set: {
-                            Goods: goodsToUpsert,
-                        },
-                    },
-                );
-
             });
-        }
+        });
 
-        await Promise.all(updates.map(f => f()));
+        await Promise.all(updates);
 
         res.status(200).json({ message: 'Дані успішно оновлено' });
     } catch (error) {
@@ -55,6 +39,5 @@ async function updateWarehouses(req, res) {
         res.status(500).json({ error: 'Помилка при оновленні даних' });
     }
 }
-
 
 module.exports = updateWarehouses;
