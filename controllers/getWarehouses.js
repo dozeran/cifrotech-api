@@ -11,7 +11,7 @@ async function getWarehouses(req, res) {
     ? moment(DateTo, "YYYYMMDD").toDate()
     : moment().subtract(1, "days").endOf("day").toDate();
   let dateFrom = DateFrom
-    ? moment(DateFrom, "YYYYMMDD").toDate()
+    ? moment(DateFrom, "YYYYMMDD").endOf("day").toDate()
     : new Date(
         dateTo.getTime() - DefaultDataTransferPeriodInDays * secondsInDay * 1000
       );
