@@ -31,8 +31,8 @@ async function getWarehouses(req, res) {
     }
   }
 
-  dateFrom.setDate(dateFrom.getDate() + 1);
-  dateTo.setDate(dateTo.getDate() + 1);
+  dateFrom.setDate(dateFrom.getDate() - 2);
+  dateTo.setDate(dateTo.getDate() - 2);
 
   const result = await WarehouseModel.aggregate([
     { $unwind: "$Goods" },
