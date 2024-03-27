@@ -31,8 +31,8 @@ async function getWarehouses(req, res) {
     }
   }
 
-  dateFrom.setDate(dateFrom.getDate() - 1);
-  dateTo.setDate(dateTo.getDate() - 1);
+  dateFrom.setDate(dateFrom.getDate() + 1);
+  dateTo.setDate(dateTo.getDate() + 1);
 
   const result = await WarehouseModel.aggregate([
     { $unwind: "$Goods" },
@@ -70,9 +70,9 @@ async function getWarehouses(req, res) {
   result.forEach((warehouse) => {
     warehouse.Goods.forEach((good) => {
       good.SalesAndRemains.forEach((saleAndRemain) => {
-        saleAndRemain.SalesDate = moment(saleAndRemain.SalesDate).format(
-          "DD/MM/YY"
-        );
+        saleAndRemain.SalesDate = moment(saleAndRemain.SalesDate)
+          .add(1, 'day')
+          .format("DD/MM/YY");
       });
     });
   });
