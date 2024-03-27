@@ -1,55 +1,59 @@
-const WarehouseModel = require("../models/schemas/warehouse");
+const WarehouseModel = require('../models/schemas/warehouse');
 
 //Working but very slowly
 
 async function updateWarehouses(req, res) {
-  try {
-    const newWarehousesData = req.body;
+    try {
+        const input = req.body;
 
-    const allWarehouses = await WarehouseModel.find({});
+        const updates = [];
 
-    for (const newWarehouseData of newWarehousesData) {
-      const existingWarehouse = allWarehouses.find(warehouse => warehouse.Warehouse === newWarehouseData.Warehouse);
+        for (const inputItem of input) {
+            updates.push(async () => {
+                const warehouseItems = await WarehouseModel.find({
+                    Warehouse: inputItem.Warehouse,
+                });
 
-      if (existingWarehouse) {
-        for (const newGood of newWarehouseData.Goods) {
-          const existingGood = existingWarehouse.Goods.find(good => good.SKU === newGood.SKU);
-        
-          if (existingGood) {
-            for (const salesAndRemains of newGood.SalesAndRemains) {
-              await WarehouseModel.findOneAndUpdate(
-                { "Warehouse": newWarehouseData.Warehouse, "Goods.SKU": newGood.SKU },
-                { $push: { "Goods.$.SalesAndRemains": salesAndRemains } }
-              );
-            }
-          } else {
-            const existingGoodInDB = await WarehouseModel.findOne({ "Goods.SKU": newGood.SKU });
-            if (!existingGoodInDB) {
-              existingWarehouse.Goods.push(newGood);
-              await existingWarehouse.save();
-            } else {
-              for (const salesAndRemains of newGood.SalesAndRemains) {
-                await WarehouseModel.findOneAndUpdate(
-                  { "Warehouse": newWarehouseData.Warehouse, "Goods.SKU": newGood.SKU },
-                  { $push: { "Goods.$.SalesAndRemains": salesAndRemains } }
+                if (warehouseItems.length === 0) {
+                    await WarehouseModel.create(inputItem);
+                    return;
+                }
+
+                const existGoods = warehouseItems[0].Goods;
+
+                const inputGoods = inputItem.Goods
+                    .map(i => (
+                        {
+                            ...i, SKU: Number(i.SKU),
+                        }
+                    ));
+                const inputGoodsSkus = inputGoods.map(i => i.SKU);
+
+                const goodsToUpsert = existGoods.filter(i => !inputGoodsSkus.includes(i.SKU));
+
+                for (const good of inputGoods) {
+                    goodsToUpsert.push(good);
+                }
+
+                await WarehouseModel.updateOne(
+                    { Warehouse: inputItem.Warehouse },
+                    {
+                        $set: {
+                            Goods: goodsToUpsert,
+                        },
+                    },
                 );
-              }
-            }
-          }
+
+            });
         }
-        
 
-        await existingWarehouse.save();
-      } else {
-        await WarehouseModel.create(newWarehouseData);
-      }
+        await Promise.all(updates.map(f => f()));
+
+        res.status(200).json({ message: 'Дані успішно оновлено' });
+    } catch (error) {
+        console.error('Помилка при оновленні даних:', error);
+        res.status(500).json({ error: 'Помилка при оновленні даних' });
     }
-
-    res.status(200).json({ message: "Дані успішно оновлено" });
-  } catch (error) {
-    console.error("Помилка при оновленні даних:", error);
-    res.status(500).json({ error: "Помилка при оновленні даних" });
-  }
 }
 
 
