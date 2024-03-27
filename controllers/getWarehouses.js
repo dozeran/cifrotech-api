@@ -11,7 +11,7 @@ async function getWarehouses(req, res) {
     ? moment(DateTo, "YYYYMMDD").toDate()
     : moment().subtract(1, "days").endOf("day").toDate();
   let dateFrom = DateFrom
-    ? moment(DateFrom, "YYYYMMDD").endOf("day").toDate()
+    ? moment(DateFrom, "YYYYMMDD").startOf("day").toDate()
     : new Date(
         dateTo.getTime() - DefaultDataTransferPeriodInDays * secondsInDay * 1000
       );
@@ -68,7 +68,6 @@ async function getWarehouses(req, res) {
     warehouse.Goods.forEach((good) => {
       good.SalesAndRemains.forEach((saleAndRemain) => {
         saleAndRemain.SalesDate = moment(saleAndRemain.SalesDate)
-          .add(1, 'day')
           .format("DD/MM/YY");
       });
     });
