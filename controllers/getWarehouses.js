@@ -9,7 +9,7 @@ async function getWarehouses(req, res) {
 
   let dateTo = DateTo
     ? moment(DateTo, "YYYYMMDD").toDate()
-    : moment().subtract(1, "days").startOf("day").toDate();
+    : moment().subtract(1, "days").endOf("day").toDate();
   let dateFrom = DateFrom
     ? moment(DateFrom, "YYYYMMDD").toDate()
     : new Date(
